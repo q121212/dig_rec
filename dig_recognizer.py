@@ -5,7 +5,7 @@
 
 import os
 import csv
-import PIL
+from PIL import Image
 
 def database():
   path_to_data = os.path.abspath(os.path.join('.', 'data_files/train.csv'))
@@ -15,12 +15,26 @@ def database():
     data = [] 
     for line in data_from_file:
       data.append(line)
-  return len(data)
+  return data
 
-def draw_image(image):
-  
+
+def draw_image(data):
+  image = Image.new('L', (28, 28))
+  # img = image.load()
+  for i in range(28):
+    for j in range(28):
+      # img[i, j] = data[28*i+j]
+      image.putpixel((i,j), int(data[28*i+j]))
+      print(image.getpixel((i,j)), data[28*i+j])
+      # print(img[i, j], data[28*i+j])
+  image.show()
+  # bytes(data[0][1:], 'utf-8')
   pass
 
+
+
 if __name__ == '__main__':
-  print(database())
+  data = database()
+  for i in range(20):
+    draw_image(data[i][1:])
   pass
